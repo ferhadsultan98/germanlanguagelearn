@@ -1,0 +1,334 @@
+{
+  "test": [
+      {
+          "question": "Ich _______ am Morgen.",
+          "translation": "Mən səhər qalxıram.",
+          "options": {
+              "A": "schlafe",
+              "B": "stehe",
+              "C": "esse",
+              "D": "trinke"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Er _______ die Straße.",
+          "translation": "O küçəni keçir.",
+          "options": {
+              "A": "läuft",
+              "B": "fährt",
+              "C": "überquert",
+              "D": "sitzt"
+          },
+          "correct_answer": "C"
+      },
+      {
+          "question": "Wir _______ das Haus.",
+          "translation": "Biz evi təmizləyirik.",
+          "options": {
+              "A": "bauen",
+              "B": "malen",
+              "C": "kaufen",
+              "D": "putzen"
+          },
+          "correct_answer": "D"
+      },
+      {
+          "question": "Sie _______ das Frühstück.",
+          "translation": "O səhər yeməyi hazırlayır.",
+          "options": {
+              "A": "isst",
+              "B": "macht",
+              "C": "trinkt",
+              "D": "kauft"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Ich _______ meine Tasche.",
+          "translation": "Mən çantamı yığırıram.",
+          "options": {
+              "A": "packe",
+              "B": "wasche",
+              "C": "kaufe",
+              "D": "male"
+          },
+          "correct_answer": "A"
+      },
+      {
+          "question": "Er _______ die Nachrichten.",
+          "translation": "O xəbərlərə baxır.",
+          "options": {
+              "A": "liest",
+              "B": "schaut",
+              "C": "schreibt",
+              "D": "hört"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Wir _______ auf dem Markt.",
+          "translation": "Biz bazarda alış-veriş edirik.",
+          "options": {
+              "A": "einkaufen",
+              "B": "laufen",
+              "C": "schlafen",
+              "D": "essen"
+          },
+          "correct_answer": "A"
+      },
+      {
+          "question": "Sie _______ die Katze.",
+          "translation": "O pişiyi bəsləyir.",
+          "options": {
+              "A": "streichelt",
+              "B": "füttert",
+              "C": "wäscht",
+              "D": "malt"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Ich _______ den Fernseher.",
+          "translation": "Mən televizoru yandırıram.",
+          "options": {
+              "A": "schließe",
+              "B": "mache",
+              "C": "anschalte",
+              "D": "kaufe"
+          },
+          "correct_answer": "C"
+      },
+      {
+          "question": "Er _______ im Fluss.",
+          "translation": "O çayda üzür.",
+          "options": {
+              "A": "läuft",
+              "B": "schwimmt",
+              "C": "fährt",
+              "D": "sitzt"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Wir _______ das Spiel.",
+          "translation": "Biz oyunu qazanırıq.",
+          "options": {
+              "A": "verlieren",
+              "B": "spielen",
+              "C": "gewinnen",
+              "D": "sehen"
+          },
+          "correct_answer": "C"
+      },
+      {
+          "question": "Sie _______ das Abendessen.",
+          "translation": "O axşam yeməyini yeyir.",
+          "options": {
+              "A": "kocht",
+              "B": "isst",
+              "C": "trinkt",
+              "D": "macht"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Ich _______ meine Schuhe.",
+          "translation": "Mən ayaqqabılarımı təmizləyirəm.",
+          "options": {
+              "A": "ziehe",
+              "B": "putze",
+              "C": "kaufe",
+              "D": "male"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Er _______ ein Lied.",
+          "translation": "O mahnı bəstələyir.",
+          "options": {
+              "A": "singt",
+              "B": "hört",
+              "C": "komponiert",
+              "D": "malt"
+          },
+          "correct_answer": "C"
+      },
+      {
+          "question": "Wir _______ den Tisch.",
+          "translation": "Biz masanı qururuq.",
+          "options": {
+              "A": "putzen",
+              "B": "decken",
+              "C": "kaufen",
+              "D": "malen"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Sie _______ im Regen.",
+          "translation": "O yağışda rəqs edir.",
+          "options": {
+              "A": "läuft",
+              "B": "tanzt",
+              "C": "sitzt",
+              "D": "schläft"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Ich _______ den Hund.",
+          "translation": "Mən iti gəzdirirəm.",
+          "options": {
+              "A": "füttere",
+              "B": "wasche",
+              "C": "spaziere",
+              "D": "male"
+          },
+          "correct_answer": "C"
+      },
+      {
+          "question": "Er _______ das Fahrrad.",
+          "translation": "O velosipedi təmir edir.",
+          "options": {
+              "A": "fährt",
+              "B": "repariert",
+              "C": "kauft",
+              "D": "wäscht"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Wir _______ die Tür.",
+          "translation": "Biz qapını bağlayırıq.",
+          "options": {
+              "A": "öffnen",
+              "B": "schließen",
+              "C": "malen",
+              "D": "treten"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Sie _______ die Wäsche.",
+          "translation": "O paltarı yuyur.",
+          "options": {
+              "A": "bügelt",
+              "B": "wäscht",
+              "C": "kauft",
+              "D": "trägt"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Ich _______ den Computer.",
+          "translation": "Mən kompüteri istifadə edirəm.",
+          "options": {
+              "A": "kaufe",
+              "B": "benutze",
+              "C": "male",
+              "D": "wasche"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Er _______ die Kinder.",
+          "translation": "O uşaqlara dərs deyir.",
+          "options": {
+              "A": "spielt",
+              "B": "unterrichtet",
+              "C": "füttert",
+              "D": "malt"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Wir _______ im Zug.",
+          "translation": "Biz qatarda otururuq.",
+          "options": {
+              "A": "laufen",
+              "B": "sitzen",
+              "C": "schlafen",
+              "D": "essen"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Sie _______ den Kuchen.",
+          "translation": "O tortu kəsir.",
+          "options": {
+              "A": "isst",
+              "B": "schneidet",
+              "C": "backt",
+              "D": "trinkt"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Ich _______ das Licht.",
+          "translation": "Mən işığı söndürürəm.",
+          "options": {
+              "A": "anschalte",
+              "B": "ausmache",
+              "C": "male",
+              "D": "kaufe"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Er _______ den Müll.",
+          "translation": "O zibili atır.",
+          "options": {
+              "A": "sammelt",
+              "B": "wegwirft",
+              "C": "malt",
+              "D": "kauft"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Wir _______ das Auto.",
+          "translation": "Biz maşını yuyuruq.",
+          "options": {
+              "A": "fahren",
+              "B": "waschen",
+              "C": "kaufen",
+              "D": "malen"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Sie _______ die Gäste.",
+          "translation": "O qonaqları qarşılayır.",
+          "options": {
+              "A": "verabschiedet",
+              "B": "begrüßt",
+              "C": "malt",
+              "D": "kocht"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Ich _______ den Brief.",
+          "translation": "Mən məktubu göndərirəm.",
+          "options": {
+              "A": "schreibe",
+              "B": "sende",
+              "C": "lese",
+              "D": "male"
+          },
+          "correct_answer": "B"
+      },
+      {
+          "question": "Er _______ im Bett.",
+          "translation": "O yataqda uzanır.",
+          "options": {
+              "A": "sitzt",
+              "B": "liegt",
+              "C": "läuft",
+              "D": "springt"
+          },
+          "correct_answer": "B"
+      }
+  ]
+}

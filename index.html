@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="az">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alman Dili Öyrənmə Platforması</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        --bg-dark: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        --text-light: #333;
+        --text-dark: #f4f4f4;
+        --card-bg-light: #ffffff;
+        --card-bg-dark: #2c3e50;
+      }
+
+      body {
+        transition: background 0.3s ease, color 0.3s ease;
+        min-height: 100vh;
+        background: var(--bg-light);
+        color: var(--text-light);
+        background: linear-gradient(
+          45deg,
+          #f4f4f4,
+          #e0f7fa,
+          #c8e6c9,
+          #fff3e0
+        ); /* Başlangıç lineer gradient */
+        background-size: 400% 400%; /* Animasyonun genişliği */
+        animation: gradientAnimation 10s ease infinite; /* Animasyonu başlat */
+      }
+
+      body.dark-mode {
+        background: var(--bg-dark);
+        color: var(--text-dark);
+      }
+
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        25% {
+          background-position: 50% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        75% {
+          background-position: 50% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      .test-section {
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      body.dark-mode .test-section {
+        background-color: rgba(44, 62, 80, 0.9);
+        color: var(--text-dark);
+      }
+
+      .test-controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .test-length-selector {
+        max-width: 200px;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .test-controls {
+          flex-direction: column;
+        }
+
+        .test-length-selector {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Alman Dili Öyrənmə</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#word-completion"
+                  data-section="word-completion"
+                  >Sözləri Tamamlama</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#sentence-formation"
+                  data-section="sentence-formation"
+                  >Düzgün Cümlə Qurma</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#synonym-antonym"
+                  data-section="synonym-antonym"
+                  >Sinonim və Antonim</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#phrase-expression"
+                  data-section="phrase-expression"
+                  >Deyim və İfadələr</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="#sentence-analysis"
+                  data-section="sentence-analysis"
+                  >Ağıllı Cümlə Təhlili</a
+                >
+              </li>
+            </ul>
+            <div class="d-flex align-items-center">
+              <button id="themeToggle" class="btn btn-outline-secondary">
+               Tema
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content Sections -->
+      <div class="container-fluid mt-4">
+        <!-- Word Completion Section -->
+        <section
+          id="word-completion"
+          class="test-section"
+          style="display: none"
+        >
+          <div class="row">
+            <div class="col-12">
+              <h2>Sözləri Tamamlama</h2>
+              <div class="test-controls mb-3">
+                <select class="form-select test-length-selector">
+                  <option value="10">10 Sual</option>
+                  <option value="30">30 Sual</option>
+                  <option value="50">50 Sual</option>
+                </select>
+                <button class="btn btn-primary start-test">Testi Başla</button>
+              </div>
+              <div class="test-container"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sentence Formation Section -->
+        <section
+          id="sentence-formation"
+          class="test-section"
+          style="display: none"
+        >
+          <div class="row">
+            <div class="col-12">
+              <h2>Düzgün Cümlə Qurma</h2>
+              <div class="test-controls mb-3">
+                <select class="form-select test-length-selector">
+                  <option value="10">10 Sual</option>
+                  <option value="30">30 Sual</option>
+                  <option value="50">50 Sual</option>
+                </select>
+                <button class="btn btn-primary start-test">Testi Başla</button>
+              </div>
+              <div class="test-container"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Synonym Antonym Section -->
+        <section
+          id="synonym-antonym"
+          class="test-section"
+          style="display: none"
+        >
+          <div class="row">
+            <div class="col-12">
+              <h2>Sinonim və Antonim</h2>
+              <div class="test-controls mb-3">
+                <select class="form-select test-length-selector">
+                  <option value="10">10 Sual</option>
+                  <option value="30">30 Sual</option>
+                  <option value="50">50 Sual</option>
+                </select>
+                <button class="btn btn-primary start-test">Testi Başla</button>
+              </div>
+              <div class="test-container"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Phrase Expression Section -->
+        <section
+          id="phrase-expression"
+          class="test-section"
+          style="display: none"
+        >
+          <div class="row">
+            <div class="col-12">
+              <h2>Deyim və İfadələr</h2>
+              <div class="test-controls mb-3">
+                <select class="form-select test-length-selector">
+                  <option value="10">10 Sual</option>
+                  <option value="30">30 Sual</option>
+                  <option value="50">50 Sual</option>
+                </select>
+                <button class="btn btn-primary start-test">Testi Başla</button>
+              </div>
+              <div class="test-container"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sentence Analysis Section -->
+        <section
+          id="sentence-analysis"
+          class="test-section"
+          style="display: none"
+        >
+          <div class="row">
+            <div class="col-12">
+              <h2>Ağıllı Cümlə Təhlili</h2>
+              <div class="test-controls mb-3">
+                <select class="form-select test-length-selector">
+                  <option value="10">10 Sual</option>
+                  <option value="30">30 Sual</option>
+                  <option value="50">50 Sual</option>
+                </select>
+                <button class="btn btn-primary start-test">Testi Başla</button>
+              </div>
+              <div class="test-container"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const TEST_JSON_PATHS = {
+          "word-completion": {
+            10: "./soztamamlama/word-completion-10.json",
+            30: "./soztamamlama/word-completion-30.json",
+            50: "./soztamamlama/word-completion-50.json",
+          },
+          "sentence-formation": {
+            10: "./duzguncumlequrma/sentence-formation-10.json",
+            30: "./duzguncumlequrma/sentence-formation-30.json",
+            50: "./duzguncumlequrma/sentence-formation-50.json",
+          },
+          "synonym-antonym": {
+            10: "./sinonimantonim/synonym-antonym-10.json",
+            30: "./sinonimantonim/synonym-antonym-30.json",
+            50: "./sinonimantonim/synonym-antonym-50.json",
+          },
+          "phrase-expression": {
+            10: "./deyimagilliifade/phrase-expression-10.json",
+            30: "./deyimagilliifade/phrase-expression-30.json",
+            50: "./deyimagilliifade/phrase-expression-50.json",
+          },
+          "sentence-analysis": {
+            10: "./agillicumle/sentence-analysis-10.json",
+            30: "./agillicumle/sentence-analysis-30.json",
+            50: "./agillicumle/sentence-analysis-50.json",
+          },
+        };
+
+        class TestManager {
+          constructor() {
+            this.currentTest = null;
+            this.currentQuestions = [];
+            this.score = 0;
+            this.userAnswers = [];
+          }
+
+          async loadTest(testType, testLength) {
+            try {
+              const testPath = TEST_JSON_PATHS[testType][testLength.toString()];
+              if (!testPath) {
+                throw new Error("Test path not found.");
+              }
+
+              const response = await fetch(testPath);
+              const testData = await response.json();
+
+              const shuffledQuestions = this.shuffleArray(testData.test);
+              this.currentQuestions = shuffledQuestions.slice(0, testLength);
+              this.score = 0;
+              this.userAnswers = [];
+
+              return this.currentQuestions;
+            } catch (error) {
+              console.error("Test loading error:", error);
+              return null;
+            }
+          }
+
+          shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+          }
+
+          submitAnswer(questionIndex, selectedAnswer) {
+            const currentQuestion = this.currentQuestions[questionIndex];
+            const isCorrect = selectedAnswer === currentQuestion.correct_answer;
+
+            // Store the user's answer
+            this.userAnswers[questionIndex] = {
+              question: currentQuestion.question,
+              translation: currentQuestion.translation || "",
+              selectedAnswer: selectedAnswer,
+              selectedOption: currentQuestion.options[selectedAnswer],
+              correctAnswer: currentQuestion.correct_answer,
+              correctOption:
+                currentQuestion.options[currentQuestion.correct_answer],
+              isCorrect: isCorrect,
+            };
+
+            // Update score
+            this.score = this.userAnswers.filter(
+              (answer) => answer && answer.isCorrect
+            ).length;
+          }
+
+          getTestResults() {
+            return {
+              totalQuestions: this.currentQuestions.length,
+              correctAnswers: this.score,
+              percentage: Math.round(
+                (this.score / this.currentQuestions.length) * 100
+              ),
+            };
+          }
+
+          getUserAnswers() {
+            return this.userAnswers;
+          }
+        }
+
+        const testManager = new TestManager();
+
+        const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+        const testSections = document.querySelectorAll(".test-section");
+
+        navLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const sectionId = link.getAttribute("data-section");
+
+            testSections.forEach((section) => {
+              section.style.display = "none";
+            });
+
+            const activeSection = document.getElementById(sectionId);
+            if (activeSection) {
+              activeSection.style.display = "block";
+            }
+          });
+        });
+
+        const themeToggle = document.getElementById("themeToggle");
+        const themeIcon = document.getElementById("themeIcon");
+        let isDarkMode = false;
+
+        themeToggle.addEventListener("click", () => {
+          isDarkMode = !isDarkMode;
+          document.body.classList.toggle("dark-mode", isDarkMode);
+          themeIcon.classList.toggle("fa-moon", !isDarkMode);
+          themeIcon.classList.toggle("fa-sun", isDarkMode);
+        });
+
+        const startTestButtons = document.querySelectorAll(".start-test");
+        startTestButtons.forEach((button) => {
+          button.addEventListener("click", async (e) => {
+            const section = e.target.closest(".test-section");
+            const testContainer = section.querySelector(".test-container");
+            const testLengthSelector = section.querySelector(
+              ".test-length-selector"
+            );
+
+            const testLength = parseInt(testLengthSelector.value);
+            const testType = section.id;
+
+            await startTest(testType, testLength, testContainer);
+          });
+        });
+
+        async function startTest(testType, testLength, container) {
+          const questions = await testManager.loadTest(testType, testLength);
+
+          if (questions) {
+            renderTestQuestions(questions, container, testLength);
+          } else {
+            container.innerHTML =
+              '<div class="alert alert-danger">Test yüklenirken hata oluştu.</div>';
+          }
+        }
+
+        function renderTestQuestions(questions, container, testLength) {
+          container.innerHTML = "";
+          const itemsPerPage = 10;
+          const totalPages = Math.ceil(questions.length / itemsPerPage);
+
+          // Render questions
+          const questionsHtml = questions
+            .map((question, index) => {
+              const optionsHtml = Object.entries(question.options)
+                .map(
+                  ([key, value]) => `
+                    <button 
+                        class="btn btn-outline-primary option-btn m-1" 
+                        data-question-index="${index}" 
+                        data-answer="${key}"
+                    >
+                        ${key}: ${value}
+                    </button>
+                `
+                )
+                .join("");
+              const questionText = `Sual ${index + 1}. ${question.question}`;
+              const translationHtml = question.translation
+                ? `<p class="translation-text text-muted">${question.translation}</p>`
+                : "";
+
+              return `
+                    <div class="question mb-4" data-page="${
+                      Math.floor(index / itemsPerPage) + 1
+                    }">
+                        <p class="question-text">${questionText}</p>
+                        ${translationHtml}
+                        <div class="options">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
+            })
+            .join("");
+
+          // Pagination controls
+          const paginationHtml = `
+                <nav aria-label="Test pagination">
+                    <ul class="pagination justify-content-center mt-4">
+                        ${Array.from(
+                          { length: totalPages },
+                          (_, i) => `
+                            <li class="page-item ${i === 0 ? "active" : ""}">
+                                <a class="page-link" href="#" data-page="${
+                                  i + 1
+                                }">${i + 1}</a>
+                            </li>
+                        `
+                        ).join("")}
+                    </ul>
+                </nav>
+                <button class="btn btn-success mt-3" id="submitTest">Testi Bitir</button>
+            `;
+
+          container.innerHTML = questionsHtml + paginationHtml;
+
+          // Show only the first page initially
+          updatePagination(1);
+
+          // Add event listeners
+          const optionButtons = container.querySelectorAll(".option-btn");
+          optionButtons.forEach((button) => {
+            button.addEventListener("click", handleAnswerSelection);
+          });
+
+          const pageLinks = container.querySelectorAll(".page-link");
+          pageLinks.forEach((link) => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const page = parseInt(link.getAttribute("data-page"));
+              updatePagination(page);
+            });
+          });
+
+          const submitButton = container.querySelector("#submitTest");
+          submitButton.addEventListener("click", () =>
+            showTestResults(container)
+          );
+        }
+
+        function updatePagination(activePage) {
+          const questions = document.querySelectorAll(".question");
+          const pageItems = document.querySelectorAll(".page-item");
+
+          // Hide/show questions based on page
+          questions.forEach((question) => {
+            const questionPage = parseInt(question.getAttribute("data-page"));
+            question.style.display =
+              questionPage === activePage ? "block" : "none";
+          });
+
+          // Update active page styling
+          pageItems.forEach((item) => {
+            const link = item.querySelector(".page-link");
+            const page = parseInt(link.getAttribute("data-page"));
+            item.classList.toggle("active", page === activePage);
+          });
+        }
+
+        function handleAnswerSelection(event) {
+          const questionIndex = parseInt(
+            event.target.getAttribute("data-question-index")
+          );
+          const selectedAnswer = event.target.getAttribute("data-answer");
+          testManager.submitAnswer(questionIndex, selectedAnswer);
+
+          const options = event.target.closest(".options");
+          options.querySelectorAll(".option-btn").forEach((btn) => {
+            btn.classList.remove("btn-success", "btn-danger");
+            btn.disabled = true;
+          });
+
+          const isCorrect =
+            testManager.getUserAnswers()[questionIndex].isCorrect;
+          event.target.classList.add(isCorrect ? "btn-success" : "btn-danger");
+        }
+
+        function showTestResults(container) {
+          const results = testManager.getTestResults();
+
+          container.innerHTML = `
+                <div class="test-results text-center">
+                    <h3 class="mb-4">Test Nəticələri</h3>
+                    <div class="result-details">
+                        <p>Toplam Sual: <strong>${
+                          results.totalQuestions
+                        }</strong></p>
+                        <p>Düzgün Cavab: <strong>${
+                          results.correctAnswers
+                        }</strong></p>
+                        <p>Nəticə: <strong>${results.percentage}%</strong></p>
+                    </div>
+                    <div class="result-feedback mt-4">
+                        ${getResultFeedback(results.percentage)}
+                    </div>
+                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#resultsModal">Nəticələri Ətraflı Gör</button>
+                </div>
+            `;
+
+          renderResultsModal();
+        }
+
+        function renderResultsModal() {
+          const userAnswers = testManager.getUserAnswers();
+          let modalHtml = `
+                <div class="modal fade" id="resultsModal" tabindex="-1" aria-labelledby="resultsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="resultsModalLabel">Test Nəticələri</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <ul class="list-group">
+            `;
+
+          userAnswers.forEach((answer, index) => {
+            if (!answer) return; // Skip unanswered questions
+            const statusClass = answer.isCorrect
+              ? "list-group-item-success"
+              : "list-group-item-danger";
+            const statusText = answer.isCorrect ? "Düzgün" : "Səhv";
+            const translationHtml = answer.translation
+              ? `<p class="text-muted">${answer.translation}</p>`
+              : "";
+
+            modalHtml += `
+                    <li class="list-group-item ${statusClass}">
+                        <strong>Sual ${index + 1}. ${answer.question}</strong>
+                        ${translationHtml}
+                        <p>Sizin cavabınız: ${answer.selectedAnswer}: ${
+              answer.selectedOption
+            } (${statusText})</p>
+                        <p>Düzgün cavab: ${answer.correctAnswer}: ${
+              answer.correctOption
+            }</p>
+                    </li>
+                `;
+          });
+
+          modalHtml += `
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bağla</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+          if (!document.getElementById("resultsModal")) {
+            document.body.insertAdjacentHTML("beforeend", modalHtml);
+          } else {
+            document.getElementById("resultsModal").outerHTML = modalHtml;
+          }
+        }
+
+        function getResultFeedback(percentage) {
+          if (percentage >= 90) {
+            return '<div class="alert alert-success">Əla! Siz mükəmməl nəticə göstərdiniz.</div>';
+          } else if (percentage >= 70) {
+            return '<div class="alert alert-info">Yaxşı iş! Daha da yaxşılaşa bilərsiniz.</div>';
+          } else if (percentage >= 50) {
+            return '<div class="alert alert-warning">Orta səviyyə. Daha çox çalışmalısınız.</div>';
+          } else {
+            return '<div class="alert alert-danger">Zəif nəticə. Dərslərə daha çox diqqət yetirin.</div>';
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

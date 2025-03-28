@@ -1,0 +1,114 @@
+{
+    "test": [
+        {
+            "question": "Ich _______ das Fenster.",
+            "translation": "Mən pəncərəni bağlayıram.",
+            "options": {
+                "A": "öffne",
+                "B": "schließe",
+                "C": "male",
+                "D": "trete"
+            },
+            "correct_answer": "B"
+        },
+        {
+            "question": "Er _______ den Kaffee.",
+            "translation": "O qəhvəni hazırlayır.",
+            "options": {
+                "A": "trinkt",
+                "B": "isst",
+                "C": "macht",
+                "D": "kauft"
+            },
+            "correct_answer": "C"
+        },
+        {
+            "question": "Wir _______ das Zimmer.",
+            "translation": "Biz otağı təmizləyirik.",
+            "options": {
+                "A": "bauen",
+                "B": "malen",
+                "C": "kaufen",
+                "D": "putzen"
+            },
+            "correct_answer": "D"
+        },
+        {
+            "question": "Sie _______ die Blumen.",
+            "translation": "O çiçəkləri sulayır.",
+            "options": {
+                "A": "pflückt",
+                "B": "malt",
+                "C": "kauft",
+                "D": "gießt"
+            },
+            "correct_answer": "D"
+        },
+        {
+            "question": "Ich _______ meine Jacke.",
+            "translation": "Mən pencəyimi geyinirəm.",
+            "options": {
+                "A": "ziehe",
+                "B": "wasche",
+                "C": "kaufe",
+                "D": "male"
+            },
+            "correct_answer": "A"
+        },
+        {
+            "question": "Er _______ das Radio.",
+            "translation": "O radioya qulaq asır.",
+            "options": {
+                "A": "macht",
+                "B": "hört",
+                "C": "schaltet",
+                "D": "kauft"
+            },
+            "correct_answer": "B"
+        },
+        {
+            "question": "Wir _______ im Schwimmbad.",
+            "translation": "Biz hovuzda üzürük.",
+            "options": {
+                "A": "schwimmen",
+                "B": "laufen",
+                "C": "schlafen",
+                "D": "essen"
+            },
+            "correct_answer": "A"
+        },
+        {
+            "question": "Sie _______ den Tisch.",
+            "translation": "O masanı qurur.",
+            "options": {
+                "A": "putzt",
+                "B": "deckt",
+                "C": "malt",
+                "D": "kauft"
+            },
+            "correct_answer": "B"
+        },
+        {
+            "question": "Ich _______ den Müll.",
+            "translation": "Mən zibili atıram.",
+            "options": {
+                "A": "sammle",
+                "B": "male",
+                "C": "werfe",
+                "D": "kaufe"
+            },
+            "correct_answer": "C"
+        },
+        {
+            "question": "Er _______ im Park.",
+            "translation": "O parkda gəzir.",
+            "options": {
+                "A": "schläft",
+                "B": "spaziert",
+                "C": "isst",
+                "D": "sitzt"
+            },
+            "correct_answer": "B"
+        }
+    ]
+}
