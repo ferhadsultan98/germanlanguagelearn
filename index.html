@@ -1,657 +1,1389 @@
 <!DOCTYPE html>
 <html lang="az">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alman Dili Öyrənmə Platforması</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anbar İdarəetmə Sistemi</title>
     <style>
-      :root {
-        --bg-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        --bg-dark: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-        --text-light: #333;
-        --text-dark: #f4f4f4;
-        --card-bg-light: #ffffff;
-        --card-bg-dark: #2c3e50;
-      }
-
-      body {
-        transition: background 0.3s ease, color 0.3s ease;
-        min-height: 100vh;
-        background: var(--bg-light);
-        color: var(--text-light);
-        background: linear-gradient(
-          45deg,
-          #f4f4f4,
-          #e0f7fa,
-          #c8e6c9,
-          #fff3e0
-        ); /* Başlangıç lineer gradient */
-        background-size: 400% 400%; /* Animasyonun genişliği */
-        animation: gradientAnimation 10s ease infinite; /* Animasyonu başlat */
-      }
-
-      body.dark-mode {
-        background: var(--bg-dark);
-        color: var(--text-dark);
-      }
-
-      @keyframes gradientAnimation {
-        0% {
-          background-position: 0% 50%;
-        }
-        25% {
-          background-position: 50% 50%;
-        }
-        50% {
-          background-position: 100% 50%;
-        }
-        75% {
-          background-position: 50% 50%;
-        }
-        100% {
-          background-position: 0% 50%;
-        }
-      }
-      .test-section {
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-
-      body.dark-mode .test-section {
-        background-color: rgba(44, 62, 80, 0.9);
-        color: var(--text-dark);
-      }
-
-      .test-controls {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-      }
-
-      .test-length-selector {
-        max-width: 200px;
-      }
-
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .test-controls {
-          flex-direction: column;
+        /* Ümumi Stillər */
+        body {
+            fontFamily: 'Arial, sans-serif';
+            margin: 0;
+            padding: 0;
+            backgroundColor: #f0f2f5; /* Göz yormayan fon rəngi */
+            color: #333;
+            display: flex;
+            flexDirection: column;
+            minHeight: 100vh;
+            lineHeight: 1.6;
         }
 
-        .test-length-selector {
-          width: 100%;
+        .mainContainer {
+            width: 95%;
+            maxWidth: 1400px; /* Geniş ekranlar üçün */
+            margin: 20px auto;
+            padding: 20px;
+            backgroundColor: #ffffff; /* Ağ fon */
+            boxShadow: 0 4px 12px rgba(0,0,0,0.1); /* Müasir kölgə */
+            borderRadius: 8px;
+            flexGrow: 1;
         }
-      }
+
+        h1, h2, h3 {
+            color: #1a237e; /* Tünd göy başlıq rəngi */
+            marginBottom: 1rem;
+        }
+
+        /* Göstərilən və Gizlədilən Bölmələr */
+        .viewSection {
+            display: none; /* Başlanğıcda bütün bölmələr gizlidir */
+        }
+
+        .activeView {
+            display: block; /* Aktiv bölmə göstərilir */
+        }
+
+        /* Giriş Forması Stilləri */
+        .loginFormContainer {
+            maxWidth: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            border: 1px solid #ddd;
+            borderRadius: 8px;
+            backgroundColor: #f9f9f9;
+        }
+
+        .loginFormContainer h2 {
+            textAlign: center;
+            marginBottom: 25px;
+        }
+
+        .formGroup {
+            marginBottom: 20px;
+        }
+
+        .formGroup label {
+            display: block;
+            marginBottom: 8px;
+            fontWeight: bold;
+            color: #555;
+        }
+
+        .formGroup input[type="email"],
+        .formGroup input[type="password"],
+        .formGroup input[type="text"],
+        .formGroup input[type="number"],
+        .formGroup input[type="date"],
+        .formGroup select,
+        .formGroup textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            borderRadius: 6px;
+            boxSizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        .formGroup input:focus,
+        .formGroup select:focus,
+        .formGroup textarea:focus {
+            borderColor: #1a237e;
+            outline: none;
+        }
+        
+        .formGroup textarea {
+            minHeight: 80px;
+            resize: vertical;
+        }
+
+        .loginButton, .actionButton, .standardButton {
+            width: 100%;
+            padding: 12px;
+            backgroundColor: #1a237e; /* Əsas düymə rəngi */
+            color: white;
+            border: none;
+            borderRadius: 6px;
+            cursor: pointer;
+            fontSize: 16px;
+            transition: background-color 0.3s;
+            marginTop: 10px;
+        }
+
+        .loginButton:hover, .actionButton:hover, .standardButton:hover {
+            backgroundColor: #0f174b; /* Hover rəngi */
+        }
+
+        .logoutButton {
+            backgroundColor: #d32f2f; /* Qırmızı çıxış düyməsi */
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            borderRadius: 6px;
+            cursor: pointer;
+            fontSize: 15px;
+            transition: background-color 0.3s;
+            float: right; /* Sağ tərəfə yerləşdirmə */
+        }
+        .logoutButton:hover {
+            backgroundColor: #b71c1c;
+        }
+
+        /* Naviqasiya */
+        .navbar {
+            backgroundColor: #1a237e;
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            justifyContent: space-between;
+            alignItems: center;
+            marginBottom: 20px;
+            borderRadius: 8px 8px 0 0; /* Yalnız yuxarı künclər */
+        }
+        .navbar .logo {
+            fontSize: 24px;
+            fontWeight: bold;
+        }
+        .navbar .navLinks button {
+            background: none;
+            border: none;
+            color: white;
+            margin: 0 10px;
+            cursor: pointer;
+            fontSize: 16px;
+            padding: 5px 10px;
+            borderRadius: 4px;
+            transition: background-color 0.2s;
+        }
+        .navbar .navLinks button:hover, .navbar .navLinks button.activeTab {
+            backgroundColor: rgba(255,255,255,0.2);
+        }
+
+
+        /* Cədvəl Stilləri */
+        .tableContainer {
+            overflowX: auto; /* Üfüqi skroll */
+            marginTop: 20px;
+        }
+
+        .dataTable {
+            width: 100%;
+            borderCollapse: collapse;
+            marginTop: 15px;
+            boxShadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .dataTable th, .dataTable td {
+            border: 1px solid #ddd;
+            padding: 12px; /* Daha çox boşluq */
+            textAlign: left;
+            verticalAlign: middle;
+        }
+
+        .dataTable th {
+            backgroundColor: #e8eaf6; /* Açıq göy başlıq fonu */
+            color: #1a237e; /* Tünd göy mətn */
+            fontWeight: bold;
+            cursor: default; /* Sort üçün pointer ola bilər */
+        }
+        .dataTable th .sortIcon {
+            marginLeft: 5px;
+            opacity: 0.5;
+        }
+
+        .dataTable tr:nth-child(even) {
+            backgroundColor: #f9f9f9; /* Zebra cərgələri */
+        }
+
+        .dataTable tr:hover {
+            backgroundColor: #eef; /* Hover effekti */
+        }
+
+        .dataTable .actionButtons button {
+            marginRight: 5px;
+            padding: 6px 10px;
+            fontSize: 13px;
+            borderRadius: 4px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .editButton {
+            backgroundColor: #ffc107; /* Sarı */
+            color: #333;
+        }
+        .editButton:hover {
+            backgroundColor: #e0a800;
+        }
+        .deleteButton {
+            backgroundColor: #dc3545; /* Qırmızı */
+            color: white;
+        }
+        .deleteButton:hover {
+            backgroundColor: #c82333;
+        }
+
+        /* Filtr və İxrac/İdxal */
+        .controlsContainer {
+            display: flex;
+            flexWrap: wrap; /* Kiçik ekranlarda sətirə keçmək üçün */
+            justifyContent: space-between;
+            alignItems: center;
+            marginBottom: 20px;
+            padding: 15px;
+            backgroundColor: #f8f9fa;
+            borderRadius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        .controlsContainer .filterInput {
+            padding: 10px;
+            border: 1px solid #ccc;
+            borderRadius: 6px;
+            marginRight: 10px;
+            flexGrow: 1; /* Mümkün qədər yer tutsun */
+            minWidth: 200px; /* Minimum en */
+            marginBottom: 10px; /* Mobil üçün */
+        }
+        .controlsContainer .fileInput {
+            display: inline-block; /* Yan-yana durması üçün */
+            marginRight: 10px;
+            marginBottom: 10px; /* Mobil üçün */
+        }
+        .controlsContainer .standardButton {
+            width: auto; /* Avtomatik en */
+            padding: 10px 15px; /* Xüsusi ölçü */
+            marginRight: 5px;
+            marginBottom: 10px; /* Mobil üçün */
+        }
+        
+        /* Modal Pəncərə (Məhsul əlavə et/redaktə et) */
+        .modal {
+            display: none; /* Başlanğıcda gizli */
+            position: fixed;
+            zIndex: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            backgroundColor: rgba(0,0,0,0.5); /* Yarımşəffaf fon */
+        }
+        .modalContent {
+            backgroundColor: #fff;
+            margin: 5% auto; /* Yuxarıdan 5%, mərkəzdə */
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            maxWidth: 600px;
+            borderRadius: 8px;
+            position: relative;
+            boxShadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .closeButton {
+            color: #aaa;
+            float: right;
+            fontSize: 28px;
+            fontWeight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        .closeButton:hover,
+        .closeButton:focus {
+            color: black;
+            textDecoration: none;
+            cursor: pointer;
+        }
+
+        /* Responsivlik */
+        @media (max-width: 768px) {
+            .mainContainer {
+                width: 98%;
+                padding: 15px;
+                margin: 10px auto;
+            }
+            .loginFormContainer {
+                width: 90%;
+                margin: 30px auto;
+                padding: 20px;
+            }
+            .navbar {
+                flexDirection: column;
+                alignItems: flex-start;
+            }
+            .navbar .navLinks {
+                marginTop: 10px;
+                width: 100%;
+                display: flex;
+                justifyContent: space-around;
+            }
+             .navbar .navLinks button {
+                margin: 0 5px;
+            }
+            .logoutButton {
+                float: none;
+                display: block;
+                margin-top: 10px;
+                width: 100%;
+            }
+            .controlsContainer {
+                flexDirection: column;
+            }
+            .controlsContainer .filterInput,
+            .controlsContainer .standardButton,
+            .controlsContainer .fileInput {
+                width: 100%;
+                marginRight: 0;
+                marginBottom: 10px;
+            }
+            .modalContent {
+                width: 90%;
+                margin: 10% auto;
+            }
+            .dataTable th, .dataTable td {
+                padding: 8px; /* Kiçik ekranlarda daha az boşluq */
+                fontSize: 14px;
+            }
+            .dataTable .actionButtons button {
+                padding: 5px 8px;
+                fontSize: 12px;
+                display: block; /* Düymələri alt-alta */
+                margin-bottom: 5px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar .logo {
+                fontSize: 20px;
+            }
+            .navbar .navLinks button {
+                fontSize: 14px;
+            }
+            h1 { fontSize: 1.8rem; }
+            h2 { fontSize: 1.5rem; }
+        }
+        
+        /* Helper sinifləri */
+        .errorMessage {
+            color: #d32f2f;
+            fontSize: 0.9em;
+            marginTop: 5px;
+        }
+        .successMessage {
+            color: #28a745;
+            fontSize: 0.9em;
+            marginTop: 5px;
+        }
+
     </style>
-  </head>
-  <body>
-    <div id="app">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Alman Dili Öyrənmə</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#mainNavbar"
-            aria-controls="mainNavbar"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  href="#word-completion"
-                  data-section="word-completion"
-                  >Sözləri Tamamlama</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  href="#sentence-formation"
-                  data-section="sentence-formation"
-                  >Düzgün Cümlə Qurma</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  href="#synonym-antonym"
-                  data-section="synonym-antonym"
-                  >Sinonim və Antonim</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  href="#phrase-expression"
-                  data-section="phrase-expression"
-                  >Deyim və İfadələr</a
-                >
-              </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  href="#sentence-analysis"
-                  data-section="sentence-analysis"
-                  >Ağıllı Cümlə Təhlili</a
-                >
-              </li>
-            </ul>
-            <div class="d-flex align-items-center">
-              <button id="themeToggle" class="btn btn-outline-secondary">
-               Tema
-              </button>
+</head>
+<body>
+
+    <div id="loginView" class="viewSection activeView">
+        <div class="loginFormContainer">
+            <h2>Sistemə Giriş</h2>
+            <div class="formGroup">
+                <label for="loginEmail">Email:</label>
+                <input type="email" id="loginEmail" required>
             </div>
-          </div>
+            <div class="formGroup">
+                <label for="loginPassword">Şifrə:</label>
+                <input type="password" id="loginPassword" required>
+            </div>
+            <p id="loginErrorMessage" class="errorMessage" style="display:none;"></p>
+            <button id="warehouseLoginButton" class="loginButton">Anbar kimi Daxil Ol</button>
+            <button id="storeLoginButton" class="loginButton" style="backgroundColor: #5cb85c; marginTop: 10px;">Mağaza kimi Daxil Ol</button> </div>
         </div>
-      </nav>
 
-      <!-- Main Content Sections -->
-      <div class="container-fluid mt-4">
-        <!-- Word Completion Section -->
-        <section
-          id="word-completion"
-          class="test-section"
-          style="display: none"
-        >
-          <div class="row">
-            <div class="col-12">
-              <h2>Sözləri Tamamlama</h2>
-              <div class="test-controls mb-3">
-                <select class="form-select test-length-selector">
-                  <option value="10">10 Sual</option>
-                  <option value="30">30 Sual</option>
-                  <option value="50">50 Sual</option>
-                </select>
-                <button class="btn btn-primary start-test">Testi Başla</button>
-              </div>
-              <div class="test-container"></div>
+    <div id="warehouseView" class="viewSection">
+        <div class="navbar">
+            <div class="logo">Anbar Paneli</div>
+            <div class="navLinks">
+                <button id="navProducts" class="activeTab">Məhsullar</button>
+                <button id="navEmployees">İşçilər</button>
             </div>
-          </div>
-        </section>
+            <button id="warehouseLogoutButton" class="logoutButton">Çıxış</button>
+        </div>
+        <div class="mainContainer">
+            <div id="warehouseProductsSection">
+                <h2>Məhsul İdarəetməsi</h2>
+                <div class="controlsContainer">
+                    <input type="text" id="warehouseProductFilter" class="filterInput" placeholder="Məhsul adı, kateqoriya və ya təchizatçı ilə axtar...">
+                    <button id="addProductButton" class="standardButton actionButton">Yeni Məhsul Əlavə Et</button>
+                    <input type="file" id="importCsvButton" class="fileInput" accept=".csv" style="display:none;"> <label for="importCsvButton" class="standardButton actionButton" style="backgroundColor: #007bff;">CSV İdxal Et</label>
+                    <button id="exportCsvButton" class="standardButton actionButton" style="backgroundColor: #28a745;">CSV İxrac Et</button>
+                </div>
+                <div class="tableContainer">
+                    <table id="warehouseProductTable" class="dataTable">
+                        <thead>
+                            <tr>
+                                <th data-sort="productName">Məhsul Adı <span class="sortIcon">↕</span></th>
+                                <th data-sort="category">Kateqoriya <span class="sortIcon">↕</span></th>
+                                <th data-sort="quantity">Miqdarı <span class="sortIcon">↕</span></th>
+                                <th data-sort="price">Qiyməti (AZN) <span class="sortIcon">↕</span></th>
+                                <th data-sort="supplier">Təchizatçı <span class="sortIcon">↕</span></th>
+                                <th data-sort="entryDate">Giriş Tarixi <span class="sortIcon">↕</span></th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
 
-        <!-- Sentence Formation Section -->
-        <section
-          id="sentence-formation"
-          class="test-section"
-          style="display: none"
-        >
-          <div class="row">
-            <div class="col-12">
-              <h2>Düzgün Cümlə Qurma</h2>
-              <div class="test-controls mb-3">
-                <select class="form-select test-length-selector">
-                  <option value="10">10 Sual</option>
-                  <option value="30">30 Sual</option>
-                  <option value="50">50 Sual</option>
-                </select>
-                <button class="btn btn-primary start-test">Testi Başla</button>
-              </div>
-              <div class="test-container"></div>
+            <div id="warehouseEmployeesSection" style="display:none;">
+                <h2>İşçi İdarəetməsi</h2>
+                <div class="controlsContainer">
+                     <button id="addEmployeeButton" class="standardButton actionButton">Yeni İşçi Əlavə Et</button>
+                </div>
+                <div class="tableContainer">
+                    <table id="employeeTable" class="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Ad Soyad</th>
+                                <th>Vəzifə</th>
+                                <th>Əlaqə Nömrəsi</th>
+                                <th>Əməliyyatlar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
             </div>
-          </div>
-        </section>
-
-        <!-- Synonym Antonym Section -->
-        <section
-          id="synonym-antonym"
-          class="test-section"
-          style="display: none"
-        >
-          <div class="row">
-            <div class="col-12">
-              <h2>Sinonim və Antonim</h2>
-              <div class="test-controls mb-3">
-                <select class="form-select test-length-selector">
-                  <option value="10">10 Sual</option>
-                  <option value="30">30 Sual</option>
-                  <option value="50">50 Sual</option>
-                </select>
-                <button class="btn btn-primary start-test">Testi Başla</button>
-              </div>
-              <div class="test-container"></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Phrase Expression Section -->
-        <section
-          id="phrase-expression"
-          class="test-section"
-          style="display: none"
-        >
-          <div class="row">
-            <div class="col-12">
-              <h2>Deyim və İfadələr</h2>
-              <div class="test-controls mb-3">
-                <select class="form-select test-length-selector">
-                  <option value="10">10 Sual</option>
-                  <option value="30">30 Sual</option>
-                  <option value="50">50 Sual</option>
-                </select>
-                <button class="btn btn-primary start-test">Testi Başla</button>
-              </div>
-              <div class="test-container"></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Sentence Analysis Section -->
-        <section
-          id="sentence-analysis"
-          class="test-section"
-          style="display: none"
-        >
-          <div class="row">
-            <div class="col-12">
-              <h2>Ağıllı Cümlə Təhlili</h2>
-              <div class="test-controls mb-3">
-                <select class="form-select test-length-selector">
-                  <option value="10">10 Sual</option>
-                  <option value="30">30 Sual</option>
-                  <option value="50">50 Sual</option>
-                </select>
-                <button class="btn btn-primary start-test">Testi Başla</button>
-              </div>
-              <div class="test-container"></div>
-            </div>
-          </div>
-        </section>
-      </div>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const TEST_JSON_PATHS = {
-          "word-completion": {
-            10: "./soztamamlama/word-completion-10.json",
-            30: "./soztamamlama/word-completion-30.json",
-            50: "./soztamamlama/word-completion-50.json",
-          },
-          "sentence-formation": {
-            10: "./duzguncumlequrma/sentence-formation-10.json",
-            30: "./duzguncumlequrma/sentence-formation-30.json",
-            50: "./duzguncumlequrma/sentence-formation-50.json",
-          },
-          "synonym-antonym": {
-            10: "./sinonimantonim/synonym-antonym-10.json",
-            30: "./sinonimantonim/synonym-antonym-30.json",
-            50: "./sinonimantonim/synonym-antonym-50.json",
-          },
-          "phrase-expression": {
-            10: "./deyimagilliifade/phrase-expression-10.json",
-            30: "./deyimagilliifade/phrase-expression-30.json",
-            50: "./deyimagilliifade/phrase-expression-50.json",
-          },
-          "sentence-analysis": {
-            10: "./agillicumle/sentence-analysis-10.json",
-            30: "./agillicumle/sentence-analysis-30.json",
-            50: "./agillicumle/sentence-analysis-50.json",
-          },
+    <div id="storeView" class="viewSection">
+         <div class="navbar">
+            <div class="logo">Mağaza Paneli</div>
+            <div></div> <button id="storeLogoutButton" class="logoutButton">Çıxış</button>
+        </div>
+        <div class="mainContainer">
+            <h2>Anbardakı Məhsullar</h2>
+            <div class="controlsContainer">
+                <input type="text" id="storeProductFilter" class="filterInput" placeholder="Məhsul adı və ya kateqoriya ilə axtar...">
+                 <button id="exportStoreCsvButton" class="standardButton actionButton" style="backgroundColor: #28a745;">Siyahını CSV İxrac Et</button>
+            </div>
+            <div class="tableContainer">
+                <table id="storeProductTable" class="dataTable">
+                    <thead>
+                        <tr>
+                            <th data-sort-store="productName">Məhsul Adı <span class="sortIcon">↕</span></th>
+                            <th data-sort-store="category">Kateqoriya <span class="sortIcon">↕</span></th>
+                            <th data-sort-store="quantity">Anbardakı Miqdar <span class="sortIcon">↕</span></th>
+                            <th data-sort-store="price">Qiyməti (AZN) <span class="sortIcon">↕</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="productModal" class="modal">
+        <div class="modalContent">
+            <span class="closeButton" id="closeModalButton">&times;</span>
+            <h3 id="modalTitle">Məhsul Məlumatları</h3>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <div class="formGroup">
+                    <label for="productName">Məhsul Adı:</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="formGroup">
+                    <label for="productCategory">Kateqoriya:</label>
+                    <input type="text" id="productCategory" required>
+                </div>
+                <div class="formGroup">
+                    <label for="productQuantity">Miqdarı:</label>
+                    <input type="number" id="productQuantity" required min="0">
+                </div>
+                <div class="formGroup">
+                    <label for="productPrice">Qiyməti (AZN):</label>
+                    <input type="number" id="productPrice" required min="0" step="0.01">
+                </div>
+                <div class="formGroup">
+                    <label for="productSupplier">Təchizatçı:</label>
+                    <input type="text" id="productSupplier">
+                </div>
+                 <div class="formGroup">
+                    <label for="productEntryDate">Giriş Tarixi:</label>
+                    <input type="date" id="productEntryDate" required>
+                </div>
+                <div class="formGroup">
+                    <label for="productDescription">Təsvir:</label>
+                    <textarea id="productDescription"></textarea>
+                </div>
+                <p id="productFormErrorMessage" class="errorMessage" style="display:none;"></p>
+                <button type="submit" id="saveProductButton" class="actionButton">Yadda Saxla</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="employeeModal" class="modal">
+        <div class="modalContent">
+            <span class="closeButton" id="closeEmployeeModalButton">&times;</span>
+            <h3 id="employeeModalTitle">İşçi Məlumatları</h3>
+            <form id="employeeForm">
+                <input type="hidden" id="employeeId">
+                <div class="formGroup">
+                    <label for="employeeName">Ad Soyad:</label>
+                    <input type="text" id="employeeName" required>
+                </div>
+                <div class="formGroup">
+                    <label for="employeeRole">Vəzifə:</label>
+                    <input type="text" id="employeeRole" required>
+                </div>
+                <div class="formGroup">
+                    <label for="employeeContact">Əlaqə Nömrəsi:</label>
+                    <input type="text" id="employeeContact" required>
+                </div>
+                <p id="employeeFormErrorMessage" class="errorMessage" style="display:none;"></p>
+                <button type="submit" id="saveEmployeeButton" class="actionButton">Yadda Saxla</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script type="module">
+        // Firebase SDK-larını import et
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword, 
+            onAuthStateChanged, 
+            signOut as firebaseSignOut 
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { 
+            getDatabase, 
+            ref, 
+            set, 
+            get, 
+            onValue, 
+            update, 
+            remove as firebaseRemove, 
+            child,
+            push // unikal ID yaratmaq üçün
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        // Firebase konfiqurasiyası (Sizin təqdim etdiyiniz)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCOvdvFHbwji_yhzPjAlGTtjlIJNLC2y_Q", // API Key-lər client tərəfdə gizli deyil
+            authDomain: "hrteam-afad9.firebaseapp.com",
+            databaseURL: "https://hrteam-afad9-default-rtdb.firebaseio.com",
+            projectId: "hrteam-afad9",
+            storageBucket: "hrteam-afad9.appspot.com", // .firebasestorage.app idi, .appspot.com daha çox istifadə olunur, yoxlayın
+            messagingSenderId: "1066969486587",
+            appId: "1:1066969486587:web:f557ca9c162ac7ae620c5e",
+            measurementId: "G-THQZTV493J"
         };
 
-        class TestManager {
-          constructor() {
-            this.currentTest = null;
-            this.currentQuestions = [];
-            this.score = 0;
-            this.userAnswers = [];
-          }
+        // Firebase tətbiqini başlat
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
 
-          async loadTest(testType, testLength) {
-            try {
-              const testPath = TEST_JSON_PATHS[testType][testLength.toString()];
-              if (!testPath) {
-                throw new Error("Test path not found.");
-              }
+        // DOM Elementləri
+        const loginView = document.getElementById('loginView');
+        const warehouseView = document.getElementById('warehouseView');
+        const storeView = document.getElementById('storeView');
+        
+        // Giriş elementləri
+        const loginEmailInput = document.getElementById('loginEmail');
+        const loginPasswordInput = document.getElementById('loginPassword');
+        const warehouseLoginButton = document.getElementById('warehouseLoginButton');
+        const storeLoginButton = document.getElementById('storeLoginButton');
+        const loginErrorMessage = document.getElementById('loginErrorMessage');
 
-              const response = await fetch(testPath);
-              const testData = await response.json();
+        // Anbar elementləri
+        const warehouseLogoutButton = document.getElementById('warehouseLogoutButton');
+        const warehouseProductTableBody = document.getElementById('warehouseProductTable').getElementsByTagName('tbody')[0];
+        const addProductButton = document.getElementById('addProductButton');
+        const productModal = document.getElementById('productModal');
+        const closeModalButton = document.getElementById('closeModalButton');
+        const productForm = document.getElementById('productForm');
+        const modalTitle = document.getElementById('modalTitle');
+        const productIdInput = document.getElementById('productId');
+        const productNameInput = document.getElementById('productName');
+        const productCategoryInput = document.getElementById('productCategory');
+        const productQuantityInput = document.getElementById('productQuantity');
+        const productPriceInput = document.getElementById('productPrice');
+        const productSupplierInput = document.getElementById('productSupplier');
+        const productEntryDateInput = document.getElementById('productEntryDate');
+        const productDescriptionInput = document.getElementById('productDescription');
+        const productFormErrorMessage = document.getElementById('productFormErrorMessage');
+        const warehouseProductFilterInput = document.getElementById('warehouseProductFilter');
+        const importCsvButton = document.getElementById('importCsvButton'); // Fayl input
+        const exportCsvButton = document.getElementById('exportCsvButton');
 
-              const shuffledQuestions = this.shuffleArray(testData.test);
-              this.currentQuestions = shuffledQuestions.slice(0, testLength);
-              this.score = 0;
-              this.userAnswers = [];
+        // Anbar Naviqasiya
+        const navProductsButton = document.getElementById('navProducts');
+        const navEmployeesButton = document.getElementById('navEmployees');
+        const warehouseProductsSection = document.getElementById('warehouseProductsSection');
+        const warehouseEmployeesSection = document.getElementById('warehouseEmployeesSection');
+        
+        // İşçi elementləri (Anbar)
+        const addEmployeeButton = document.getElementById('addEmployeeButton');
+        const employeeModal = document.getElementById('employeeModal');
+        const closeEmployeeModalButton = document.getElementById('closeEmployeeModalButton');
+        const employeeForm = document.getElementById('employeeForm');
+        const employeeModalTitle = document.getElementById('employeeModalTitle');
+        const employeeIdInput = document.getElementById('employeeId');
+        const employeeNameInput = document.getElementById('employeeName');
+        const employeeRoleInput = document.getElementById('employeeRole');
+        const employeeContactInput = document.getElementById('employeeContact');
+        const employeeFormErrorMessage = document.getElementById('employeeFormErrorMessage');
+        const employeeTableBody = document.getElementById('employeeTable').getElementsByTagName('tbody')[0];
 
-              return this.currentQuestions;
-            } catch (error) {
-              console.error("Test loading error:", error);
-              return null;
+        // Mağaza elementləri
+        const storeLogoutButton = document.getElementById('storeLogoutButton');
+        const storeProductTableBody = document.getElementById('storeProductTable').getElementsByTagName('tbody')[0];
+        const storeProductFilterInput = document.getElementById('storeProductFilter');
+        const exportStoreCsvButton = document.getElementById('exportStoreCsvButton');
+        
+        // Qeydiyyat elementləri (kommentdə saxlanılıb, aktivləşdirsəniz istifadə edə bilərsiniz)
+        // const showRegistrationLink = document.getElementById('showRegistrationLink');
+        // const showLoginLink = document.getElementById('showLoginLink');
+        // const registrationFormContainer = document.getElementById('registrationFormContainer');
+        // const loginFormContainer = document.querySelector('.loginFormContainer'); // Ilk login forması
+        // const registerEmailInput = document.getElementById('registerEmail');
+        // const registerPasswordInput = document.getElementById('registerPassword');
+        // const registerRoleSelect = document.getElementById('registerRole');
+        // const registerButton = document.getElementById('registerButton');
+        // const registrationErrorMessage = document.getElementById('registrationErrorMessage');
+
+        let currentProductsData = []; // Məhsul filterləməsi üçün lokal yaddaş
+        let currentEmployeesData = []; // İşçi filterləməsi üçün lokal yaddaş (əgər lazım olarsa)
+        let currentEditingProductId = null;
+        let currentEditingEmployeeId = null;
+        let currentSortColumn = null;
+        let currentSortDirection = 'asc';
+        let currentSortColumnStore = null;
+        let currentSortDirectionStore = 'asc';
+
+
+        // Funksiyalar
+        function showView(viewId) {
+            document.querySelectorAll('.viewSection').forEach(section => section.classList.remove('activeView'));
+            document.getElementById(viewId).classList.add('activeView');
+        }
+
+        function displayErrorMessage(element, message) {
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+        
+        function clearErrorMessage(element) {
+            element.textContent = '';
+            element.style.display = 'none';
+        }
+
+        function handleLogin(userType) {
+            const email = loginEmailInput.value;
+            const password = loginPasswordInput.value;
+            clearErrorMessage(loginErrorMessage);
+
+            if (!email || !password) {
+                displayErrorMessage(loginErrorMessage, "Email və şifrə daxil edin.");
+                return;
             }
-          }
 
-          shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-              const j = Math.floor(Math.random() * (i + 1));
-              [array[i], array[j]] = [array[j], array[i]];
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    // İstifadəçi rolunu yoxla (Realtime Database-dən)
+                    const userRef = ref(database, 'users/' + user.uid);
+                    get(userRef).then((snapshot) => {
+                        if (snapshot.exists()) {
+                            const userData = snapshot.val();
+                            if (userData.role === userType) {
+                                if (userType === 'warehouse') {
+                                    showView('warehouseView');
+                                    loadProductsForWarehouse();
+                                    loadEmployeesForWarehouse();
+                                    setActiveTab(navProductsButton); // Default tab
+                                    warehouseProductsSection.style.display = 'block';
+                                    warehouseEmployeesSection.style.display = 'none';
+                                } else if (userType === 'store') {
+                                    showView('storeView');
+                                    loadProductsForStore();
+                                }
+                            } else {
+                                firebaseSignOut(auth); // Yanlış rol, çıxış etdir
+                                displayErrorMessage(loginErrorMessage, "Bu istifadəçi tipi üçün icazəniz yoxdur.");
+                            }
+                        } else {
+                             // Yeni qeydiyyatdan keçmiş istifadəçi üçün rol təyin etmə (əgər qeydiyyat aktivdirsə)
+                            // Məsələn, qeydiyyat zamanı rol seçilibsə, burada onu DB-yə yazmaq olar.
+                            // Bu kodda qeydiyyat funksiyası tam implement edilməyib,
+                            // ona görə də rolun DB-də əvvəlcədən olması gözlənilir.
+                            // Əgər istifadəçi Firebase Auth-da var, amma DB-də yoxdursa, rol təyin etmək üçün əlavə məntiq lazımdır.
+                            // İlkin olaraq sadəcə səhv mesajı verək:
+                            firebaseSignOut(auth);
+                            displayErrorMessage(loginErrorMessage, "İstifadəçi məlumatları tapılmadı. Administratorla əlaqə saxlayın.");
+                        }
+                    }).catch((error) => {
+                        firebaseSignOut(auth);
+                        displayErrorMessage(loginErrorMessage, "İstifadəçi məlumatlarını yoxlayarkən xəta: " + error.message);
+                    });
+                })
+                .catch((error) => {
+                    displayErrorMessage(loginErrorMessage, "Giriş uğursuz oldu: " + error.message);
+                });
+        }
+        
+        // Qeydiyyat funksiyası (əgər aktivləşdirilsə)
+        /*
+        function handleRegistration() {
+            const email = registerEmailInput.value;
+            const password = registerPasswordInput.value;
+            const role = registerRoleSelect.value;
+            clearErrorMessage(registrationErrorMessage);
+
+            if (!email || !password) {
+                displayErrorMessage(registrationErrorMessage, "Email və şifrə daxil edin.");
+                return;
             }
-            return array;
-          }
 
-          submitAnswer(questionIndex, selectedAnswer) {
-            const currentQuestion = this.currentQuestions[questionIndex];
-            const isCorrect = selectedAnswer === currentQuestion.correct_answer;
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    // İstifadəçi rolunu Realtime Database-ə yaz
+                    set(ref(database, 'users/'_ + user.uid), {
+                        email: user.email,
+                        role: role
+                    }).then(() => {
+                        alert(role.charAt(0).toUpperCase() + role.slice(1) + " istifadəçisi uğurla qeydiyyatdan keçdi! Daxil ola bilərsiniz.");
+                        registrationFormContainer.style.display = 'none';
+                        loginFormContainer.style.display = 'block';
+                        registerEmailInput.value = '';
+                        registerPasswordInput.value = '';
+                    }).catch((dbError) => {
+                        displayErrorMessage(registrationErrorMessage, "Rol yazılarkən xəta: " + dbError.message);
+                    });
+                })
+                .catch((error) => {
+                    displayErrorMessage(registrationErrorMessage, "Qeydiyyat uğursuz oldu: " + error.message);
+                });
+        }
+        */
 
-            // Store the user's answer
-            this.userAnswers[questionIndex] = {
-              question: currentQuestion.question,
-              translation: currentQuestion.translation || "",
-              selectedAnswer: selectedAnswer,
-              selectedOption: currentQuestion.options[selectedAnswer],
-              correctAnswer: currentQuestion.correct_answer,
-              correctOption:
-                currentQuestion.options[currentQuestion.correct_answer],
-              isCorrect: isCorrect,
+        function handleLogout(userType) {
+            firebaseSignOut(auth).then(() => {
+                showView('loginView');
+                loginEmailInput.value = '';
+                loginPasswordInput.value = '';
+                // Cədvəlləri və filterləri təmizlə
+                warehouseProductTableBody.innerHTML = '';
+                storeProductTableBody.innerHTML = '';
+                employeeTableBody.innerHTML = '';
+                warehouseProductFilterInput.value = '';
+                storeProductFilterInput.value = '';
+                currentProductsData = [];
+                currentEmployeesData = [];
+            }).catch((error) => {
+                console.error("Çıxış zamanı xəta:", error);
+                alert("Çıxış zamanı xəta baş verdi.");
+            });
+        }
+        
+        // Məhsul funksiyaları (Anbar)
+        function loadProductsForWarehouse() {
+            const productsRef = ref(database, 'products');
+            onValue(productsRef, (snapshot) => {
+                currentProductsData = [];
+                warehouseProductTableBody.innerHTML = ''; // Cədvəli təmizlə
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const product = childSnapshot.val();
+                        product.id = childSnapshot.key;
+                        currentProductsData.push(product);
+                    });
+                }
+                renderProductTable(currentProductsData, 'warehouse');
+            }, (error) => {
+                console.error("Məhsullar yüklənərkən xəta:", error);
+                alert("Məhsullar yüklənərkən xəta baş verdi.");
+            });
+        }
+
+        function renderProductTable(products, userType) {
+            const tableBody = userType === 'warehouse' ? warehouseProductTableBody : storeProductTableBody;
+            tableBody.innerHTML = ''; // Cədvəli təmizlə
+
+            const sortedProducts = sortData(products, userType === 'warehouse' ? currentSortColumn : currentSortColumnStore, userType === 'warehouse' ? currentSortDirection : currentSortDirectionStore);
+
+            sortedProducts.forEach(product => {
+                const row = tableBody.insertRow();
+                row.insertCell().textContent = product.productName || 'N/A';
+                row.insertCell().textContent = product.category || 'N/A';
+                row.insertCell().textContent = product.quantity || 0;
+                row.insertCell().textContent = product.price ? parseFloat(product.price).toFixed(2) : '0.00';
+
+                if (userType === 'warehouse') {
+                    row.insertCell().textContent = product.supplier || 'N/A';
+                    row.insertCell().textContent = product.entryDate || 'N/A';
+                    const actionsCell = row.insertCell();
+                    actionsCell.classList.add('actionButtons');
+                    
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Redaktə Et';
+                    editButton.classList.add('editButton');
+                    editButton.onclick = () => openProductModal(product);
+                    actionsCell.appendChild(editButton);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Sil';
+                    deleteButton.classList.add('deleteButton');
+                    deleteButton.onclick = () => deleteProduct(product.id, product.productName);
+                    actionsCell.appendChild(deleteButton);
+                }
+            });
+        }
+
+        function openProductModal(product = null) {
+            productForm.reset();
+            clearErrorMessage(productFormErrorMessage);
+            currentEditingProductId = product ? product.id : null;
+            modalTitle.textContent = product ? 'Məhsulu Redaktə Et' : 'Yeni Məhsul Əlavə Et';
+            
+            if (product) {
+                productIdInput.value = product.id;
+                productNameInput.value = product.productName || '';
+                productCategoryInput.value = product.category || '';
+                productQuantityInput.value = product.quantity || 0;
+                productPriceInput.value = product.price || 0;
+                productSupplierInput.value = product.supplier || '';
+                productEntryDateInput.value = product.entryDate || '';
+                productDescriptionInput.value = product.description || '';
+            } else {
+                // Yeni məhsul üçün giriş tarixini bu günə ayarla
+                productEntryDateInput.value = new Date().toISOString().split('T')[0];
+            }
+            productModal.style.display = 'block';
+        }
+
+        function closeProductModal() {
+            productModal.style.display = 'none';
+            productForm.reset();
+            currentEditingProductId = null;
+        }
+
+        productForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const productData = {
+                productName: productNameInput.value,
+                category: productCategoryInput.value,
+                quantity: parseInt(productQuantityInput.value),
+                price: parseFloat(productPriceInput.value),
+                supplier: productSupplierInput.value,
+                entryDate: productEntryDateInput.value,
+                description: productDescriptionInput.value,
             };
 
-            // Update score
-            this.score = this.userAnswers.filter(
-              (answer) => answer && answer.isCorrect
-            ).length;
-          }
-
-          getTestResults() {
-            return {
-              totalQuestions: this.currentQuestions.length,
-              correctAnswers: this.score,
-              percentage: Math.round(
-                (this.score / this.currentQuestions.length) * 100
-              ),
-            };
-          }
-
-          getUserAnswers() {
-            return this.userAnswers;
-          }
-        }
-
-        const testManager = new TestManager();
-
-        const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
-        const testSections = document.querySelectorAll(".test-section");
-
-        navLinks.forEach((link) => {
-          link.addEventListener("click", (e) => {
-            e.preventDefault();
-            const sectionId = link.getAttribute("data-section");
-
-            testSections.forEach((section) => {
-              section.style.display = "none";
-            });
-
-            const activeSection = document.getElementById(sectionId);
-            if (activeSection) {
-              activeSection.style.display = "block";
+            if (!productData.productName || !productData.category || isNaN(productData.quantity) || isNaN(productData.price) || !productData.entryDate) {
+                displayErrorMessage(productFormErrorMessage, "Bütün tələb olunan sahələri (* ilə işarələnmiş) düzgün doldurun.");
+                return;
             }
-          });
+            clearErrorMessage(productFormErrorMessage);
+
+            if (currentEditingProductId) { // Redaktə
+                const productRef = ref(database, 'products/' + currentEditingProductId);
+                update(productRef, productData)
+                    .then(() => {
+                        alert("Məhsul uğurla yeniləndi!");
+                        closeProductModal();
+                        // loadProductsForWarehouse(); // onValue avtomatik yeniləyəcək
+                    })
+                    .catch(error => displayErrorMessage(productFormErrorMessage, "Məhsul yenilənərkən xəta: " + error.message));
+            } else { // Yeni məhsul
+                const newProductRef = push(ref(database, 'products')); // Firebase unikal ID yaradır
+                set(newProductRef, productData)
+                    .then(() => {
+                        alert("Məhsul uğurla əlavə edildi!");
+                        closeProductModal();
+                        // loadProductsForWarehouse(); // onValue avtomatik yeniləyəcək
+                    })
+                    .catch(error => displayErrorMessage(productFormErrorMessage, "Məhsul əlavə edilərkən xəta: " + error.message));
+            }
         });
 
-        const themeToggle = document.getElementById("themeToggle");
-        const themeIcon = document.getElementById("themeIcon");
-        let isDarkMode = false;
-
-        themeToggle.addEventListener("click", () => {
-          isDarkMode = !isDarkMode;
-          document.body.classList.toggle("dark-mode", isDarkMode);
-          themeIcon.classList.toggle("fa-moon", !isDarkMode);
-          themeIcon.classList.toggle("fa-sun", isDarkMode);
-        });
-
-        const startTestButtons = document.querySelectorAll(".start-test");
-        startTestButtons.forEach((button) => {
-          button.addEventListener("click", async (e) => {
-            const section = e.target.closest(".test-section");
-            const testContainer = section.querySelector(".test-container");
-            const testLengthSelector = section.querySelector(
-              ".test-length-selector"
-            );
-
-            const testLength = parseInt(testLengthSelector.value);
-            const testType = section.id;
-
-            await startTest(testType, testLength, testContainer);
-          });
-        });
-
-        async function startTest(testType, testLength, container) {
-          const questions = await testManager.loadTest(testType, testLength);
-
-          if (questions) {
-            renderTestQuestions(questions, container, testLength);
-          } else {
-            container.innerHTML =
-              '<div class="alert alert-danger">Test yüklenirken hata oluştu.</div>';
-          }
+        function deleteProduct(productId, productName) {
+            if (confirm(`'${productName}' adlı məhsulu silməyə əminsinizmi?`)) {
+                const productRef = ref(database, 'products/' + productId);
+                firebaseRemove(productRef)
+                    .then(()_ => {
+                        alert("Məhsul uğurla silindi.");
+                        // loadProductsForWarehouse(); // onValue avtomatik yeniləyəcək
+                    })
+                    .catch(error => alert("Məhsul silinərkən xəta: " + error.message));
+            }
         }
 
-        function renderTestQuestions(questions, container, testLength) {
-          container.innerHTML = "";
-          const itemsPerPage = 10;
-          const totalPages = Math.ceil(questions.length / itemsPerPage);
-
-          // Render questions
-          const questionsHtml = questions
-            .map((question, index) => {
-              const optionsHtml = Object.entries(question.options)
-                .map(
-                  ([key, value]) => `
-                    <button 
-                        class="btn btn-outline-primary option-btn m-1" 
-                        data-question-index="${index}" 
-                        data-answer="${key}"
-                    >
-                        ${key}: ${value}
-                    </button>
-                `
-                )
-                .join("");
-              const questionText = `Sual ${index + 1}. ${question.question}`;
-              const translationHtml = question.translation
-                ? `<p class="translation-text text-muted">${question.translation}</p>`
-                : "";
-
-              return `
-                    <div class="question mb-4" data-page="${
-                      Math.floor(index / itemsPerPage) + 1
-                    }">
-                        <p class="question-text">${questionText}</p>
-                        ${translationHtml}
-                        <div class="options">
-                            ${optionsHtml}
-                        </div>
-                    </div>
-                `;
-            })
-            .join("");
-
-          // Pagination controls
-          const paginationHtml = `
-                <nav aria-label="Test pagination">
-                    <ul class="pagination justify-content-center mt-4">
-                        ${Array.from(
-                          { length: totalPages },
-                          (_, i) => `
-                            <li class="page-item ${i === 0 ? "active" : ""}">
-                                <a class="page-link" href="#" data-page="${
-                                  i + 1
-                                }">${i + 1}</a>
-                            </li>
-                        `
-                        ).join("")}
-                    </ul>
-                </nav>
-                <button class="btn btn-success mt-3" id="submitTest">Testi Bitir</button>
-            `;
-
-          container.innerHTML = questionsHtml + paginationHtml;
-
-          // Show only the first page initially
-          updatePagination(1);
-
-          // Add event listeners
-          const optionButtons = container.querySelectorAll(".option-btn");
-          optionButtons.forEach((button) => {
-            button.addEventListener("click", handleAnswerSelection);
-          });
-
-          const pageLinks = container.querySelectorAll(".page-link");
-          pageLinks.forEach((link) => {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-              const page = parseInt(link.getAttribute("data-page"));
-              updatePagination(page);
+        function filterProducts(filterText, userType) {
+            const filteredProducts = currentProductsData.filter(product => {
+                const searchTerm = filterText.toLowerCase();
+                return (product.productName && product.productName.toLowerCase().includes(searchTerm)) ||
+                       (product.category && product.category.toLowerCase().includes(searchTerm)) ||
+                       (userType === 'warehouse' && product.supplier && product.supplier.toLowerCase().includes(searchTerm));
             });
-          });
+            renderProductTable(filteredProducts, userType);
+        }
+        
+        // CSV İdxal/İxrac
+        function exportToCsv(data, filenamePrefix) {
+            if (!data || data.length === 0) {
+                alert("İxrac üçün məlumat yoxdur.");
+                return;
+            }
+            const headers = Object.keys(data[0]);
+            // Mağaza üçün yalnız müəyyən başlıqları ixrac et
+            const storeHeaders = ['productName', 'category', 'quantity', 'price'];
+            const activeHeaders = filenamePrefix === 'magaza_mehsullari' ? storeHeaders : headers;
 
-          const submitButton = container.querySelector("#submitTest");
-          submitButton.addEventListener("click", () =>
-            showTestResults(container)
-          );
+            let csvContent = "data:text/csv;charset=utf-8," + activeHeaders.join(",") + "\n";
+            
+            data.forEach(item => {
+                let row = activeHeaders.map(header => {
+                    let cellData = item[header] !== undefined && item[header] !== null ? String(item[header]) : '';
+                    // Vergül və yeni sətir kimi xüsusi simvolları idarə et
+                    if (cellData.includes(',')) cellData = `"${cellData.replace(/"/g, '""')}"`;
+                    return cellData;
+                });
+                csvContent += row.join(",") + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `${filenamePrefix}_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
-        function updatePagination(activePage) {
-          const questions = document.querySelectorAll(".question");
-          const pageItems = document.querySelectorAll(".page-item");
+        exportCsvButton.addEventListener('click', () => {
+            exportToCsv(currentProductsData, 'anbar_mehsullari');
+        });
+        exportStoreCsvButton.addEventListener('click', () => {
+            // Mağaza üçün yalnız müəyyən sütunları ixrac edək
+             const storeData = currentProductsData.map(p => ({
+                productName: p.productName,
+                category: p.category,
+                quantity: p.quantity,
+                price: p.price
+            }));
+            exportToCsv(storeData, 'magaza_mehsullari');
+        });
 
-          // Hide/show questions based on page
-          questions.forEach((question) => {
-            const questionPage = parseInt(question.getAttribute("data-page"));
-            question.style.display =
-              questionPage === activePage ? "block" : "none";
-          });
+        importCsvButton.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const csvData = e.target.result;
+                    try {
+                        const productsToImport = parseCsvToProducts(csvData);
+                        if (productsToImport.length > 0) {
+                            importProductsToFirebase(productsToImport);
+                        } else {
+                            alert("CSV faylında idxal ediləcək məlumat tapılmadı və ya format düzgün deyil.");
+                        }
+                    } catch (error) {
+                        alert("CSV faylını oxuyarkən xəta: " + error.message);
+                    }
+                };
+                reader.readAsText(file);
+                importCsvButton.value = ''; // Inputu təmizlə ki, eyni faylı yenidən seçmək mümkün olsun
+            }
+        });
 
-          // Update active page styling
-          pageItems.forEach((item) => {
-            const link = item.querySelector(".page-link");
-            const page = parseInt(link.getAttribute("data-page"));
-            item.classList.toggle("active", page === activePage);
-          });
+        function parseCsvToProducts(csvText) {
+            const lines = csvText.split(/\r\n|\n/).filter(line => line.trim() !== '');
+            if (lines.length < 2) return []; // Başlıq + ən azı bir məlumat sətri olmalıdır
+
+            const headers = lines[0].split(',').map(h => h.trim());
+            const products = [];
+
+            // Gözlənilən başlıqlar və onların məhsul obyektindəki açar adları
+            const headerMapping = {
+                'productName': 'productName', 'Məhsul Adı': 'productName',
+                'category': 'category', 'Kateqoriya': 'category',
+                'quantity': 'quantity', 'Miqdarı': 'quantity',
+                'price': 'price', 'Qiyməti': 'price', 'Qiyməti (AZN)': 'price',
+                'supplier': 'supplier', 'Təchizatçı': 'supplier',
+                'entryDate': 'entryDate', 'Giriş Tarixi': 'entryDate',
+                'description': 'description', 'Təsvir': 'description'
+            };
+            
+            const mappedHeaders = headers.map(h => headerMapping[h] || h);
+
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(','); // Sadə split, vergül olan datalar üçün daha mürəkkəb parse lazımdır
+                const product = {};
+                let hasRequiredField = false;
+                for (let j = 0; j < mappedHeaders.length; j++) {
+                    const key = mappedHeaders[j];
+                    let value = values[j] ? values[j].trim() : '';
+                    if (value.startsWith('"') && value.endsWith('"')) { // "Dırnaq" içindəki datanı təmizlə
+                        value = value.substring(1, value.length - 1).replace(/""/g, '"');
+                    }
+
+                    if (key === 'quantity') product[key] = parseInt(value) || 0;
+                    else if (key === 'price') product[key] = parseFloat(value) || 0.0;
+                    else product[key] = value;
+
+                    if (key === 'productName' && value) hasRequiredField = true;
+                }
+                 // Ən azı məhsul adı olmalıdır
+                if (hasRequiredField && product.productName) {
+                    // Tarix formatını yoxla və düzəlt (əgər DD.MM.YYYY formatındadırsa YYYY-MM-DD-yə çevir)
+                    if (product.entryDate && product.entryDate.includes('.')) {
+                        const parts = product.entryDate.split('.');
+                        if (parts.length === 3) {
+                            product.entryDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                        }
+                    }
+                    if (!product.entryDate) { // Əgər tarix yoxdursa, bu günü təyin et
+                        product.entryDate = new Date().toISOString().split('T')[0];
+                    }
+                    products.push(product);
+                }
+            }
+            return products;
         }
 
-        function handleAnswerSelection(event) {
-          const questionIndex = parseInt(
-            event.target.getAttribute("data-question-index")
-          );
-          const selectedAnswer = event.target.getAttribute("data-answer");
-          testManager.submitAnswer(questionIndex, selectedAnswer);
+        function importProductsToFirebase(products) {
+            if (!confirm(`${products.length} məhsul idxal ediləcək. Davam edirsiniz?`)) return;
 
-          const options = event.target.closest(".options");
-          options.querySelectorAll(".option-btn").forEach((btn) => {
-            btn.classList.remove("btn-success", "btn-danger");
-            btn.disabled = true;
-          });
+            const productsRef = ref(database, 'products');
+            let importCount = 0;
+            let errorCount = 0;
 
-          const isCorrect =
-            testManager.getUserAnswers()[questionIndex].isCorrect;
-          event.target.classList.add(isCorrect ? "btn-success" : "btn-danger");
+            products.forEach(productData => {
+                const newProductRef = push(productsRef); // Hər bir məhsul üçün yeni unikal ID
+                set(newProductRef, productData)
+                    .then(() => {
+                        importCount++;
+                        if (importCount + errorCount === products.length) {
+                            alert(`${importCount} məhsul uğurla idxal edildi. ${errorCount > 0 ? errorCount + ' xəta baş verdi.' : ''}`);
+                            // loadProductsForWarehouse(); // onValue yeniləyəcək
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Məhsul idxal edilərkən xəta: ", error, productData);
+                        errorCount++;
+                         if (importCount + errorCount === products.length) {
+                            alert(`${importCount} məhsul uğurla idxal edildi. ${errorCount} xəta baş verdi.`);
+                        }
+                    });
+            });
+        }
+        
+        // Sort funksiyası
+        function sortData(dataArray, columnKey, direction) {
+            if (!columnKey) return dataArray;
+
+            return [...dataArray].sort((a, b) => {
+                let valA = a[columnKey];
+                let valB = b[columnKey];
+
+                // Say və qiymət üçün rəqəm kimi müqayisə et
+                if (columnKey === 'quantity' || columnKey === 'price') {
+                    valA = parseFloat(valA) || 0;
+                    valB = parseFloat(valB) || 0;
+                } else { // Digərləri üçün string kimi
+                    valA = String(valA).toLowerCase();
+                    valB = String(valB).toLowerCase();
+                }
+
+                if (valA < valB) {
+                    return direction === 'asc' ? -1 : 1;
+                }
+                if (valA > valB) {
+                    return direction === 'asc' ? 1 : -1;
+                }
+                return 0;
+            });
         }
 
-        function showTestResults(container) {
-          const results = testManager.getTestResults();
+        function updateSortIcons(tableId, sortKey, sortDirection) {
+            const table = document.getElementById(tableId);
+            table.querySelectorAll('th .sortIcon').forEach(icon => icon.textContent = '↕');
+            const activeTh = table.querySelector(`th[data-sort="${sortKey}"], th[data-sort-store="${sortKey}"]`);
+            if (activeTh) {
+                activeTh.querySelector('.sortIcon').textContent = sortDirection === 'asc' ? '↑' : '↓';
+            }
+        }
+        
+        // Anbar məhsul cədvəli üçün başlıqlara klik eventləri
+        document.querySelectorAll('#warehouseProductTable th[data-sort]').forEach(th => {
+            th.addEventListener('click', () => {
+                const sortKey = th.dataset.sort;
+                if (currentSortColumn === sortKey) {
+                    currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentSortColumn = sortKey;
+                    currentSortDirection = 'asc';
+                }
+                filterProducts(warehouseProductFilterInput.value, 'warehouse'); // Yenidən filterlə və render et
+                updateSortIcons('warehouseProductTable', currentSortColumn, currentSortDirection);
+            });
+        });
 
-          container.innerHTML = `
-                <div class="test-results text-center">
-                    <h3 class="mb-4">Test Nəticələri</h3>
-                    <div class="result-details">
-                        <p>Toplam Sual: <strong>${
-                          results.totalQuestions
-                        }</strong></p>
-                        <p>Düzgün Cavab: <strong>${
-                          results.correctAnswers
-                        }</strong></p>
-                        <p>Nəticə: <strong>${results.percentage}%</strong></p>
-                    </div>
-                    <div class="result-feedback mt-4">
-                        ${getResultFeedback(results.percentage)}
-                    </div>
-                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#resultsModal">Nəticələri Ətraflı Gör</button>
-                </div>
-            `;
+        // Mağaza məhsul cədvəli üçün başlıqlara klik eventləri
+        document.querySelectorAll('#storeProductTable th[data-sort-store]').forEach(th => {
+            th.addEventListener('click', () => {
+                const sortKey = th.dataset.sortStore;
+                if (currentSortColumnStore === sortKey) {
+                    currentSortDirectionStore = currentSortDirectionStore === 'asc' ? 'desc' : 'asc';
+                } else {
+                    currentSortColumnStore = sortKey;
+                    currentSortDirectionStore = 'asc';
+                }
+                filterProducts(storeProductFilterInput.value, 'store'); // Yenidən filterlə və render et
+                updateSortIcons('storeProductTable', currentSortColumnStore, currentSortDirectionStore);
+            });
+        });
 
-          renderResultsModal();
+        // İşçi Funksiyaları (Anbar)
+        function loadEmployeesForWarehouse() {
+            const employeesRef = ref(database, 'employees');
+            onValue(employeesRef, (snapshot) => {
+                currentEmployeesData = [];
+                employeeTableBody.innerHTML = '';
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const employee = childSnapshot.val();
+                        employee.id = childSnapshot.key;
+                        currentEmployeesData.push(employee);
+                    });
+                }
+                renderEmployeeTable(currentEmployeesData);
+            }, (error) => {
+                console.error("İşçilər yüklənərkən xəta:", error);
+                alert("İşçilər yüklənərkən xəta baş verdi.");
+            });
         }
 
-        function renderResultsModal() {
-          const userAnswers = testManager.getUserAnswers();
-          let modalHtml = `
-                <div class="modal fade" id="resultsModal" tabindex="-1" aria-labelledby="resultsModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="resultsModalLabel">Test Nəticələri</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <ul class="list-group">
-            `;
+        function renderEmployeeTable(employees) {
+            employeeTableBody.innerHTML = '';
+            employees.forEach(emp => {
+                const row = employeeTableBody.insertRow();
+                row.insertCell().textContent = emp.employeeName || 'N/A';
+                row.insertCell().textContent = emp.employeeRole || 'N/A';
+                row.insertCell().textContent = emp.employeeContact || 'N/A';
+                
+                const actionsCell = row.insertCell();
+                actionsCell.classList.add('actionButtons');
+                
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Redaktə Et';
+                editButton.classList.add('editButton');
+                editButton.onclick = () => openEmployeeModal(emp);
+                actionsCell.appendChild(editButton);
 
-          userAnswers.forEach((answer, index) => {
-            if (!answer) return; // Skip unanswered questions
-            const statusClass = answer.isCorrect
-              ? "list-group-item-success"
-              : "list-group-item-danger";
-            const statusText = answer.isCorrect ? "Düzgün" : "Səhv";
-            const translationHtml = answer.translation
-              ? `<p class="text-muted">${answer.translation}</p>`
-              : "";
-
-            modalHtml += `
-                    <li class="list-group-item ${statusClass}">
-                        <strong>Sual ${index + 1}. ${answer.question}</strong>
-                        ${translationHtml}
-                        <p>Sizin cavabınız: ${answer.selectedAnswer}: ${
-              answer.selectedOption
-            } (${statusText})</p>
-                        <p>Düzgün cavab: ${answer.correctAnswer}: ${
-              answer.correctOption
-            }</p>
-                    </li>
-                `;
-          });
-
-          modalHtml += `
-                                </ul>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bağla</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-          if (!document.getElementById("resultsModal")) {
-            document.body.insertAdjacentHTML("beforeend", modalHtml);
-          } else {
-            document.getElementById("resultsModal").outerHTML = modalHtml;
-          }
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Sil';
+                deleteButton.classList.add('deleteButton');
+                deleteButton.onclick = () => deleteEmployee(emp.id, emp.employeeName);
+                actionsCell.appendChild(deleteButton);
+            });
         }
 
-        function getResultFeedback(percentage) {
-          if (percentage >= 90) {
-            return '<div class="alert alert-success">Əla! Siz mükəmməl nəticə göstərdiniz.</div>';
-          } else if (percentage >= 70) {
-            return '<div class="alert alert-info">Yaxşı iş! Daha da yaxşılaşa bilərsiniz.</div>';
-          } else if (percentage >= 50) {
-            return '<div class="alert alert-warning">Orta səviyyə. Daha çox çalışmalısınız.</div>';
-          } else {
-            return '<div class="alert alert-danger">Zəif nəticə. Dərslərə daha çox diqqət yetirin.</div>';
-          }
+        function openEmployeeModal(employee = null) {
+            employeeForm.reset();
+            clearErrorMessage(employeeFormErrorMessage);
+            currentEditingEmployeeId = employee ? employee.id : null;
+            employeeModalTitle.textContent = employee ? 'İşçini Redaktə Et' : 'Yeni İşçi Əlavə Et';
+            
+            if (employee) {
+                employeeIdInput.value = employee.id;
+                employeeNameInput.value = employee.employeeName || '';
+                employeeRoleInput.value = employee.employeeRole || '';
+                employeeContactInput.value = employee.employeeContact || '';
+            }
+            employeeModal.style.display = 'block';
         }
-      });
+
+        function closeEmployeeModal() {
+            employeeModal.style.display = 'none';
+            employeeForm.reset();
+            currentEditingEmployeeId = null;
+        }
+
+        employeeForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const employeeData = {
+                employeeName: employeeNameInput.value,
+                employeeRole: employeeRoleInput.value,
+                employeeContact: employeeContactInput.value,
+            };
+
+            if (!employeeData.employeeName || !employeeData.employeeRole || !employeeData.employeeContact) {
+                displayErrorMessage(employeeFormErrorMessage, "Bütün sahələri doldurun.");
+                return;
+            }
+            clearErrorMessage(employeeFormErrorMessage);
+
+            if (currentEditingEmployeeId) { // Redaktə
+                const employeeRef = ref(database, 'employees/' + currentEditingEmployeeId);
+                update(employeeRef, employeeData)
+                    .then(() => {
+                        alert("İşçi məlumatları uğurla yeniləndi!");
+                        closeEmployeeModal();
+                    })
+                    .catch(error => displayErrorMessage(employeeFormErrorMessage, "İşçi yenilənərkən xəta: " + error.message));
+            } else { // Yeni işçi
+                const newEmployeeRef = push(ref(database, 'employees'));
+                set(newEmployeeRef, employeeData)
+                    .then(() => {
+                        alert("İşçi uğurla əlavə edildi!");
+                        closeEmployeeModal();
+                    })
+                    .catch(error => displayErrorMessage(employeeFormErrorMessage, "İşçi əlavə edilərkən xəta: " + error.message));
+            }
+        });
+
+        function deleteEmployee(employeeId, employeeName) {
+            if (confirm(`'${employeeName}' adlı işçini silməyə əminsinizmi?`)) {
+                const employeeRef = ref(database, 'employees/' + employeeId);
+                firebaseRemove(employeeRef)
+                    .then(() => {
+                        alert("İşçi uğurla silindi.");
+                    })
+                    .catch(error => alert("İşçi silinərkən xəta: " + error.message));
+            }
+        }
+
+
+        // Mağaza Funksiyaları
+        function loadProductsForStore() {
+            // Mağaza da eyni məhsul məlumatlarını oxuyur
+            // Ancaq fərqli cədvəldə və daha az sütunla göstərir
+            const productsRef = ref(database, 'products');
+            onValue(productsRef, (snapshot) => {
+                currentProductsData = []; // Mağaza üçün də eyni datanı istifadə edirik, çünki anbar məlumatlarını göstərir
+                storeProductTableBody.innerHTML = ''; 
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        const product = childSnapshot.val();
+                        product.id = childSnapshot.key;
+                        currentProductsData.push(product);
+                    });
+                }
+                renderProductTable(currentProductsData, 'store');
+            }, (error) => {
+                console.error("Məhsullar mağaza üçün yüklənərkən xəta:", error);
+                alert("Məhsullar mağaza üçün yüklənərkən xəta baş verdi.");
+            });
+        }
+        
+        function setActiveTab(activeButton) {
+            document.querySelectorAll('.navbar .navLinks button').forEach(btn => btn.classList.remove('activeTab'));
+            activeButton.classList.add('activeTab');
+        }
+
+        // Event Listeners
+        warehouseLoginButton.addEventListener('click', () => handleLogin('warehouse'));
+        storeLoginButton.addEventListener('click', () => handleLogin('store'));
+        
+        warehouseLogoutButton.addEventListener('click', () => handleLogout('warehouse'));
+        storeLogoutButton.addEventListener('click', () => handleLogout('store'));
+
+        addProductButton.addEventListener('click', () => openProductModal());
+        closeModalButton.addEventListener('click', closeProductModal);
+        
+        addEmployeeButton.addEventListener('click', () => openEmployeeModal());
+        closeEmployeeModalButton.addEventListener('click', closeEmployeeModal);
+
+        warehouseProductFilterInput.addEventListener('input', (e) => filterProducts(e.target.value, 'warehouse'));
+        storeProductFilterInput.addEventListener('input', (e) => filterProducts(e.target.value, 'store'));
+
+        // Anbar naviqasiya düymələri
+        navProductsButton.addEventListener('click', () => {
+            setActiveTab(navProductsButton);
+            warehouseProductsSection.style.display = 'block';
+            warehouseEmployeesSection.style.display = 'none';
+        });
+        navEmployeesButton.addEventListener('click', () => {
+            setActiveTab(navEmployeesButton);
+            warehouseProductsSection.style.display = 'none';
+            warehouseEmployeesSection.style.display = 'block';
+        });
+        
+        // Qeydiyyat linkləri (əgər aktivləşdirilsə)
+        /*
+        if (showRegistrationLink && showLoginLink && registrationFormContainer && loginFormContainer) {
+            showRegistrationLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                loginFormContainer.style.display = 'none';
+                registrationFormContainer.style.display = 'block';
+            });
+            showLoginLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                registrationFormContainer.style.display = 'none';
+                loginFormContainer.style.display = 'block';
+            });
+            if (registerButton) {
+                registerButton.addEventListener('click', handleRegistration);
+            }
+        }
+        */
+
+        // Modal pəncərəni kənara klikləyəndə bağla
+        window.onclick = function(event) {
+            if (event.target == productModal) {
+                closeProductModal();
+            }
+            if (event.target == employeeModal) {
+                closeEmployeeModal();
+            }
+        }
+
+        // Autentifikasiya vəziyyətini yoxla (səhifə yüklənəndə)
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // İstifadəçi daxil olubsa, rolunu yoxla və müvafiq paneli göstər
+                const userRef = ref(database, 'users/' + user.uid);
+                get(userRef).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        const userData = snapshot.val();
+                        if (userData.role === 'warehouse') {
+                            showView('warehouseView');
+                            loadProductsForWarehouse();
+                            loadEmployeesForWarehouse();
+                            setActiveTab(navProductsButton); // Default tab
+                            warehouseProductsSection.style.display = 'block';
+                            warehouseEmployeesSection.style.display = 'none';
+                        } else if (userData.role === 'store') {
+                            showView('storeView');
+                            loadProductsForStore();
+                        } else {
+                            // Rol təyin edilməyibsə və ya naməlumdursa, çıxış etdir
+                            firebaseSignOut(auth);
+                            showView('loginView');
+                        }
+                    } else {
+                         // Rol DB-də yoxdursa (məsələn, köhnə istifadəçi və ya qeydiyyatdan sonra rol yazılmayıbsa)
+                        firebaseSignOut(auth); // Çıxış etdir
+                        showView('loginView');
+                    }
+                });
+            } else {
+                // İstifadəçi daxil olmayıbsa, giriş səhifəsini göstər
+                showView('loginView');
+            }
+        });
+
+        // İlkin yükləmə
+        // showView('loginView'); // onAuthStateChanged bunu idarə edəcək
+
     </script>
-  </body>
+</body>
 </html>
+
